@@ -209,7 +209,6 @@
             aking Mahal
      </p>
     </div>
-
     <!-- AUDIO PLAYER -->
     <div class="player-container" id="player-container">
         <iframe id="youtube-player" src="" frameborder="0" allow="autoplay; encrypted-media; fullscreen"></iframe>
