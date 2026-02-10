@@ -1,275 +1,147 @@
 <html>
 <head>
-    <title>Aking Liham - Maria Clara by Sugarcane</title>
+    <title>Aking Liham - Vintage Maria Clara</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display+SC:ital,wght@0,400;0,700;1,400&family=Sacramento&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin:0; padding:0; box-sizing:border-box; }
         body {
-            background: #d4c3a8;
+            background: #f5e6d1; /* soft vintage paper color */
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            font-family: serif;
             overflow-x: hidden;
-            overflow-y: auto;
-            position: relative;
         }
 
-        /* BACKGROUND */
-        .table-bg {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: url('https://images.unsplash.com/photo-1614563637806-840210fda001?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
-            opacity: 0.7; mix-blend-mode: multiply;
-            z-index: 0;
-        }
-
-        /* KRAFT ENVELOPE */
+        /* ENVELOPE */
         #envelope {
-            width: 420px; height: 280px;
-            background: #c19a6b;
+            width: 420px;
+            height: 280px;
+            background: #c49f72;
             border: 1px solid #8b5a2b;
-            box-shadow: 0 15px 25px rgba(0,0,0,0.7);
-            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             cursor: pointer;
-            z-index: 3;
-            transform: rotate(-2deg) scale(1);
-            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            display: block; /* Palaging nakikita hanggang sa ma-click */
-        }
-        #flap {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 50%;
-            background: #b08968;
-            border-bottom: 1px solid #8b5a2b;
-            transform-origin: top center;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 4;
-            clip-path: polygon(0 0, 100% 0, 50% 60%);
-        }
-        #twine {
-            position: absolute; top: 40%; left: 50%;
-            transform: translate(-50%, -50%) rotate(-15deg);
-            width: 70%; height: 6px;
-            background: #8b5a2b;
-            border-radius: 3px;
-            z-index: 5;
-            transition: all 0.6s ease-out;
-        }
-        #flowers {
-            position: absolute; top: 35%; left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            gap: 5px;
-            z-index: 6;
-            transition: all 0.6s ease-out;
-        }
-        .flower {
-            width: 8px; height: 15px;
-            border-radius: 3px;
-        }
-        .f1 { background: #d4a017; }
-        .f2 { background: #8fbc8f; }
-        .f3 { background: #f5deb3; }
-        .accent {
-            position: absolute;
-            width: 6px; height: 6px;
-            background: #d4a017;
-            border-radius: 50%;
-            z-index: 4;
-            transition: all 0.6s ease-out;
-        }
-        .acc1 { top: 25%; left: 30%; }
-        .acc2 { top: 35%; left: 70%; }
-        .acc3 { top: 65%; left: 25%; }
-        .acc4 { top: 75%; left: 65%; }
-
-        /* ENVELOPE TRANSFORMATION STATE */
-        #envelope.transforming {
-            opacity: 0; /* Mawawala nang dahan-dahan */
-            visibility: hidden; /* Hindi na makikita pero nandiyan pa */
-            position: absolute; /* Hindi makakasagabal sa papel */
-        }
-
-        /* FLOATING PAPER - PERMANENTLY VISIBLE */
-        #full-letter {
-            display: none;
+            z-index: 2;
             position: relative;
-            max-width: 850px;
-            width: 100%;
-            padding: 60px 70px;
-            background: #f9f1e6;
+            transition: transform 1s ease;
             background-image: 
-                radial-gradient(#d4c3a8 1px, transparent 1px),
-                radial-gradient(#d4c3a8 1px, transparent 1px);
-            background-size: 50px 50px;
-            background-position: 0 0, 25px 25px;
-            border-radius: 2px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            z-index: 3;
-            animation: float 6s ease-in-out infinite;
-            margin: 20px 0; /* Para hindi ma-cut sa maliit na screen */
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
-        @keyframes float {
-            0% { transform: rotate(-1deg) translateY(0px); }
-            25% { transform: rotate(0.5deg) translateY(-5px); }
-            50% { transform: rotate(0deg) translateY(-10px); }
-            75% { transform: rotate(0.5deg) translateY(-5px); }
-            100% { transform: rotate(-1deg) translateY(0px); }
+
+        /* ENVELOPE FLAP */
+        #flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 50%;
+            background: #b58d60;
+            border-bottom: 1px solid #8b5a2b;
+            border-radius: 8px 8px 0 0;
+            transform-origin: top center;
+            transition: transform 1s ease-in-out;
+            clip-path: polygon(0 0, 100% 0, 50% 60%);
+            box-shadow: inset -2px -2px 5px rgba(0,0,0,0.2);
+        }
+
+        #envelope.open #flap {
+            transform: rotateX(180deg);
+        }
+
+        /* LETTER */
+        #letter {
+            display: none;
+            max-width: 850px;
+            width: 90%;
+            padding: 50px 60px;
+            background: #fcf4e5; /* antique paper color */
+            border-radius: 4px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            z-index: 3;
+            position: relative;
+            animation: floatPaper 6s ease-in-out infinite;
+            font-size: 1.1em;
+        }
+
+        @keyframes floatPaper {
+            0% { transform: translateY(0) rotate(-1deg); }
+            25% { transform: translateY(-5px) rotate(0.5deg); }
+            50% { transform: translateY(-10px) rotate(0deg); }
+            75% { transform: translateY(-5px) rotate(0.5deg); }
+            100% { transform: translateY(0) rotate(-1deg); }
         }
 
         /* CALLIGRAPHY TEXT */
         .greeting {
             font-family: 'Sacramento', cursive;
-            font-size: 55px; color: #4a2c2a;
-            margin-bottom: 40px;
+            font-size: 58px;
+            color: #4a2c2a;
             text-align: center;
-            line-height: 1.2;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 0.8s;
+            margin-bottom: 35px;
         }
         .message {
             font-family: 'Great Vibes', cursive;
-            font-size: 28px; color: #4a2c2a;
+            font-size: 28px;
             line-height: 1.8;
+            color: #4a2c2a;
+            margin-bottom: 45px;
             text-align: justify;
-            margin-bottom: 50px;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 1.2s;
         }
         .closing {
             font-family: 'Playfair Display SC', serif;
-            font-size: 38px; color: #4a2c2a;
+            font-size: 38px;
             text-align: right;
+            color: #4a2c2a;
             font-style: italic;
-            margin-right: 30px;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards 1.6s;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* PLAYER CONTAINER */
-        .player-container {
-            position: fixed; bottom: 20px; right: 20px;
-            z-index: 4;
-            opacity: 0;
-            transition: opacity 0.8s ease 1s;
-        }
-        .player-container.active {
-            opacity: 1;
-        }
-        #youtube-player {
-            width: 150px; height: 90px;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-        #backup-audio {
+        /* HIDDEN AUDIO */
+        #bg-music {
             display: none;
-            width: 150px;
-            margin-top: 10px;
-            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="table-bg"></div>
 
     <!-- ENVELOPE -->
-    <div id="envelope" onclick="triggerAllActions()">
-        <div class="accent acc1"></div>
-        <div class="accent acc2"></div>
-        <div class="accent acc3"></div>
-        <div class="accent acc4"></div>
+    <div id="envelope" onclick="openLetter()">
         <div id="flap"></div>
-        <div id="twine"></div>
-        <div id="flowers">
-            <div class="flower f1"></div>
-            <div class="flower f2"></div>
-            <div class="flower f3"></div>
-        </div>
     </div>
 
-    <!-- FLOATING PAPER - PERMANENTLY VISIBLE AFTER CLICK -->
-    <div id="full-letter">
+    <!-- LETTER CONTENT -->
+    <div id="letter">
         <p class="greeting">Aking Iniirog</p>
         <p class="message">
-            mula pa lamang nang ika'y unang nasilayan ng mga mata ko, isang himala ang naganap sa kaibuturan ng aking puso. Hindi ko sukat akalain na sa isang sulyap lamang, ang aking kaluluwa'y mabibihag ng iyong kariktan. Tila ba sa bawat panaginip, sa bawat pagtatagpo ng mga bituin, ang ating mga palad ay nakatakdang maghawak, ang ating mga puso ay nakatakdang magsanib. Sa bawat sansinukob, sa bawat pagkakataon, ang ating mga kaluluwa'y nakatakdang magtagpo at sa iyo'y humaling.
+            Mula pa lamang nang ika'y unang nasilayan ng aking mga mata, isang himala ang naganap sa kaibuturan ng aking puso. Hindi ko sukat akalain na sa isang sulyap lamang, ang aking kaluluwa'y mabibihag ng iyong kariktan. Tila ba sa bawat panaginip, sa bawat pagtatagpo ng mga bituin, ang ating mga palad ay nakatakdang maghawak, ang ating mga puso ay nakatakdang magsanib. Sa bawat sansinukob, sa bawat pagkakataon, ang ating mga kaluluwa'y nakatakdang magtagpo at sa iyo'y humaling.
 
-            Sa aking paningin, ika'y walang kapintasan, bagkus ang bawat di-kasakdalan mo'y siyang nagpapatibay sa aking pagmamahal, sapagkat sa iyong mga pagkakamali, nakikita ko ang iyong tunay na ikaw. Kaya't sa bawat tibok ng puso ko, ang pangalan mo ang siyang sinasambit, aking Iniirog
- 
+            Sa aking paningin, ika'y walang kapintasan, bagkus ang bawat di-kasakdalan mo'y siyang nagpapatibay sa aking pagmamahal, sapagkat sa iyong mga pagkakamali, nakikita ko ang iyong tunay na ikaw. Kaya't sa bawat tibok ng puso ko, ang pangalan mo ang siyang sinasambit, aking Iniirog.
+
             Sabihin mang dumating ang araw na hindi ko na muling mamamasdan ang iyong ganda, asahan mong hindi ako titigil sa paghahanap, sa paghihintay. Sapagkat kahit ang mundo'y magunaw, ang pag-ibig ko sa iyo'y mananatili magpakailanman. At kung sakali mang ang aking mga mata'y magdilim, hindi ako mangangamba, sapagkat batid ng aking puso kung saan ito titibok. At kahit pa ang alaala'y maglaho, ang damdamin ko'y hindi magbabago.
         </p>
         <p class="closing">
-            Maligayang Araw ng mga Puso,<br>
-            aking Mahal
-     </p>
-    </div>
-    <!-- AUDIO PLAYER -->
-    <div class="player-container" id="player-container">
-        <iframe id="youtube-player" src="" frameborder="0" allow="autoplay; encrypted-media; fullscreen"></iframe>
-        <audio id="backup-audio" controls preload="auto">
-            <source src="https://www.youtube.com/embed/-57OVjteEQw?autoplay=1" type="audio/mp4">
-        
+            Maligayang Araw ng mga Puso,<br>aking Mahal
+        </p>
+
+        <!-- HIDDEN AUDIO -->
+        <audio id="bg-music" src="https://freesound.org/data/previews/647/647856_12411833-lq.mp3" preload="auto"></audio>
     </div>
 
     <script>
-        // FIXED CODE - PAPEL HINDI NA MAWAWALA
-        function triggerAllActions() {
-            // Envelope mawawala nang dahan-dahan
-            const envelope = document.getElementById('envelope');
-            envelope.classList.add('transforming');
-
-            // Ipakita ang sulat/papel PERMANENTE
-            const fullLetter = document.getElementById('full-letter');
-            fullLetter.style.display = 'block';
-            fullLetter.style.position = 'relative'; // Hindi mawawala kahit mag-scroll
-            fullLetter.style.zIndex = '10'; // Laging nasa itaas
-
-            // Play song
-            const playerContainer = document.getElementById('player-container');
-            playerContainer.classList.add('active');
-            const youtubePlayer = document.getElementById('youtube-player');
-            youtubePlayer.src = 'https://www.youtube.com/embed/-57OVjteEQw?autoplay=1&enablejsapi=1&rel=0';
-            
-            // Force play commands
+        function openLetter() {
+            document.getElementById('envelope').classList.add('open');
             setTimeout(() => {
-                youtubePlayer.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-            }, 200);
+                document.getElementById('envelope').style.display = 'none';
+                document.getElementById('letter').style.display = 'block';
 
-            // Backup audio
-            setTimeout(() => {
-                const backupAudio = document.getElementById('backup-audio');
-                if (youtubePlayer.contentWindow.document.readyState !== 'complete') {
-                    backupAudio.play();
-                    youtubePlayer.style.display = 'none';
-                    backupAudio.style.display = 'block';
-                }
-            }, 1000);
+                // Play music only when envelope is clicked
+                const audio = document.getElementById('bg-music');
+                audio.play();
+            }, 900);
         }
-
-        // Initial setup
-        window.onload = () => {
-            document.getElementById('full-letter').style.display = 'none';
-            // Preload players
-            document.addEventListener('click', () => {
-                document.getElementById('youtube-player').load();
-                document.getElementById('backup-audio').load();
-            }, { once: true });
-        };
-
-        // Iwasan ang pagkawala ng papel kapag nag-scroll
-        window.addEventListener('scroll', () => {
-            const fullLetter = document.getElementById('full-letter');
-            if (fullLetter.style.display === 'block') {
-                fullLetter.style.top = '50%';
-                fullLetter.style.transform = 'translateY(-50%)';
-            }
-        });
     </script>
+
 </body>
 </html>
